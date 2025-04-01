@@ -7,6 +7,42 @@ const updateDisplay = (value) => {
   display.textContent = value || '0';
 };
 
+const clearCalculator = () => {
+  currentInput = '';
+  previousInput = '';
+  operator = '';
+  updateDisplay('');
+};
+
+const calculate = () => {
+  const num1 = parseFloat(previousInput);
+  const num2 = parseFloat(currentInput);
+  if (isNaN(num1) || isNaN(num2)) return;
+
+  let result;
+  switch (operator) {
+    case '+':
+      result = num1 + num2;
+      break;
+    case '−':
+      result = num1 - num2;
+      break;
+    case '×':
+      result = num1 * num2;
+      break;
+    case '÷':
+      result = num2 === 0 ? 'Cannot divide by zero' : num1 / num2;
+      break;
+    default:
+      result = 'Error';
+  }
+
+  updateDisplay(result);
+  currentInput = '';
+  previousInput = '';
+  operator = '';
+};
+
 document.querySelectorAll('.digit').forEach(button => {
   button.addEventListener('click', () => {
     currentInput += button.dataset.value;
@@ -24,39 +60,6 @@ document.querySelectorAll('.operation').forEach(button => {
   });
 });
 
-document.querySelector('.equal').addEventListener('click', () => {
-  if (currentInput && previousInput && operator) {
-    const num1 = parseFloat(previousInput);
-    const num2 = parseFloat(currentInput);
-    let result;
+document.querySelector('.equal').addEventListener('click', calculate);
 
-    switch (operator) {
-      case '+':
-        result = num1 + num2;
-        break;
-      case '−':
-        result = num1 - num2;
-        break;
-      case '×':
-        result = num1 * num2;
-        break;
-      case '÷':
-        result = num1 / num2;
-        break;
-      default:
-        result = 0;
-    }
-
-    updateDisplay(result);
-    currentInput = '';
-    previousInput = '';
-    operator = '';
-  }
-});
-
-document.querySelector('.clear').addEventListener('click', () => {
-  currentInput = '';
-  previousInput = '';
-  operator = '';
-  updateDisplay('');
-});
+document.querySelector('.clear').addEventListener('click', clearCalculator);
