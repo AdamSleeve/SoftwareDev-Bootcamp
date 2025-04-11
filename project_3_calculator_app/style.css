@@ -16,7 +16,7 @@ body {
   overflow: hidden;
 }
 
-.display {
+#display {
   background: #333;
   color: white;
   text-align: right;

@@ -4,7 +4,7 @@ let previousInput = '';
 let operator = '';
 
 const updateDisplay = (value) => {
-  display.textContent = value || '0';
+  display.value = value || '0';
 };
 
 const clearCalculator = () => {
